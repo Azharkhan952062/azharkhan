@@ -9,7 +9,7 @@ const Sellerlogin = () => {
 
     useEffect(() => {
         if (isSeller) {
-            navigate("/");
+            navigate("/seller");
         }
     }, [isSeller]);
 
