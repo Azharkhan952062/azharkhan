@@ -25,7 +25,7 @@ const App = () => {
 
   return (
     <div className="text-default min-h-screen">
-      
+
       {isSellerPath ? null : <Navbar />}
       {showUserLogin ? <Auth /> : null}
       <Toaster />
@@ -47,16 +47,18 @@ const App = () => {
           <Route path="/my-orders" element={<MyOrders />} />
           <Route path="/add-address" element={<AddAddress />} />
 
-          <Route 
-          path="/seller/*"
-          element={isSeller ? <SellerLayout /> : <SellerLogin />}>
-            <Route index path="add-product" element={isSeller ? <AddProduct /> : null }/>
-            <Route path="product-list" element={isSeller ? <ProductList /> : null }/>
-            <Route path="orders" element={isSeller ? <Orders /> : null }/>
+          <Route
+            path="/seller"
+            element={isSeller ? <SellerLayout /> : <SellerLogin />}
+          >
+            <Route path="add-product" element={<AddProduct />} />
+            <Route path="product-list" element={<ProductList />} />
+            <Route path="orders" element={<Orders />} />
           </Route>
+
         </Routes>
       </div>
-      { isSellerPath ? null: <Footer />}
+      {isSellerPath ? null : <Footer />}
     </div>
   );
 };
