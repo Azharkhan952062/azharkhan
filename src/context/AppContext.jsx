@@ -13,14 +13,14 @@ export const AppContext = createContext(null);
 const AppContextProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState(false); 
+  const [user, setUser] = useState(false);
   const [isSeller, setIsSeller] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState({});
   const [searchQuery, setSearchQuery] = useState({});
 
- 
+
   const fetchSeller = async () => {
     try {
       const { data } = await axios.get("/api/seller/is-auth");
@@ -46,7 +46,7 @@ const AppContextProvider = ({ children }) => {
       toast.error(error.message);
     }
   };
-  
+
   const addToCart = (itemId) => {
     let cartData = structuredClone(cartItems);
     if (cartData[itemId]) {
@@ -58,7 +58,7 @@ const AppContextProvider = ({ children }) => {
     toast.success("add to cart");
   };
 
- 
+
   const updateCartItem = (itemId, quantity) => {
     let cartData = structuredClone(cartItems || {});
     cartData[itemId] = quantity;
@@ -66,7 +66,7 @@ const AppContextProvider = ({ children }) => {
     toast.success("update cart");
   };
 
-  
+
   const cartCount = () => {
     let totalCount = 0;
     for (const item in cartItems) {
@@ -75,7 +75,7 @@ const AppContextProvider = ({ children }) => {
     return totalCount;
   };
 
-  
+
   const totalCartAmount = () => {
     let totalAmount = 0;
     for (const items in cartItems) {
@@ -87,7 +87,7 @@ const AppContextProvider = ({ children }) => {
     return Math.floor(totalAmount * 100) / 100;
   };
 
- 
+
   const removeFromcarts = (itemId) => {
     let cartData = structuredClone(cartItems);
     if (cartData[itemId]) {
@@ -106,7 +106,7 @@ const AppContextProvider = ({ children }) => {
         if (!data.success) {
           toast.error(data.message);
         }
-      } catch (error){
+      } catch (error) {
         toast.error(error.message);
       }
     };
@@ -116,9 +116,13 @@ const AppContextProvider = ({ children }) => {
   }, [cartItems]);
 
   useEffect(() => {
-    fetchProducts();
-    fetchSeller();
+    fetchProducts();   // 👈 ye wahi hai, hataaya nahi
+
+    if (window.location.pathname.includes("seller")) {
+      fetchSeller();
+    }
   }, []);
+
 
   const value = {
     navigate,
